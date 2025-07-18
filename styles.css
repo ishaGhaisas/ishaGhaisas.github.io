@@ -1,0 +1,1103 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Minecraftia', monospace;
+    background: url('assets/wallpaper.jpg') center center / cover no-repeat;
+    color: #7d3f5c;
+    overflow: hidden;
+    min-height: 100vh;
+    height: 100vh;
+    position: relative;
+}
+
+body::after {
+    content: none;
+}
+
+body::before {
+    content: none;
+}
+
+/* Loading Screen */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.loading-content {
+    width: 80%;
+    max-width: 800px;
+    background: rgba(255, 240, 246, 0.75);
+    /* semi-transparent pastel */
+    border-radius: 12px;
+    box-shadow: 0 8px 32px 0 #e7a6b6, 0 0 0 4px #ffb3c6;
+    border: 4px solid #ffb3c6;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(12px) saturate(1.2);
+    -webkit-backdrop-filter: blur(12px) saturate(1.2);
+}
+
+.loading-content::before {
+    content: none;
+}
+
+.loading-text,
+.terminal-header {
+    position: relative;
+    z-index: 1;
+}
+
+.loading-text {
+    padding: 20px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.cursor {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    50% {
+        opacity: 1;
+    }
+
+    51%,
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Terminal Styles */
+.terminal {
+    width: calc(100vw - 40px);
+    max-width: none;
+    height: calc(100vh - 40px);
+    max-height: none;
+    margin: 20px;
+    background: rgba(255, 214, 224, 0.55);
+    /* less white, more clear, pink tint */
+    border-radius: 12px;
+    box-shadow: 0 8px 32px 0 #ffb3c6, 0 0 24px 4px #ffb3c6;
+    border: 4px solid #ffb3c6;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+    font-family: 'Minecraftia', monospace;
+    backdrop-filter: blur(4px) saturate(1.2);
+    -webkit-backdrop-filter: blur(4px) saturate(1.2);
+}
+
+.terminal.hidden {
+    display: none;
+}
+
+.terminal-header {
+    background: #ffb3c6;
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+    border-bottom: 4px solid #e7a6b6;
+    border-radius: 8px 8px 0 0;
+    min-height: 38px;
+    box-shadow: 0 2px 0 0 #ffb3c6;
+    position: relative;
+    font-family: 'Minecraftia', monospace;
+}
+
+.terminal-buttons {
+    display: flex;
+    gap: 6px;
+    margin-left: auto;
+    z-index: 2;
+    height: 100%;
+    align-items: center;
+}
+
+.terminal-header-right {
+    width: 48px;
+    min-width: 48px;
+    height: 1px;
+    z-index: 2;
+}
+
+.terminal-title {
+    position: absolute;
+    left: 18px;
+    right: 60px;
+    text-align: left;
+    color: #7d3f5c;
+    font-size: 20px;
+    font-family: 'Minecraftia', monospace;
+    font-weight: bold;
+    letter-spacing: 1px;
+    pointer-events: none;
+    z-index: 1;
+    text-shadow: 0 0 8px #ffb3c6, 0 0 16px #ffd6e0;
+}
+
+.terminal-buttons span {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    border-radius: 2px;
+    margin-right: 0;
+    border: 2px solid #7d3f5c;
+    background: #fff0f6;
+    box-shadow: 1px 1px 0 0 #e7a6b6;
+    opacity: 1;
+    transition: transform 0.1s;
+    position: relative;
+}
+
+.terminal-buttons span:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 4px;
+    right: 4px;
+    top: 8px;
+    height: 2px;
+    background: #7d3f5c;
+    border-radius: 1px;
+}
+
+.terminal-buttons .close:before {
+    content: '';
+    left: 5px;
+    right: 5px;
+    top: 8px;
+    height: 2px;
+    background: #e57373;
+    transform: rotate(45deg);
+}
+
+.terminal-buttons .close:after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 5px;
+    right: 5px;
+    top: 8px;
+    height: 2px;
+    background: #e57373;
+    transform: rotate(-45deg);
+}
+
+.terminal-buttons .minimize:before {
+    background: #ffb3c6;
+    transform: none;
+}
+
+.terminal-buttons .maximize:before {
+    background: #e57373;
+    transform: none;
+}
+
+.terminal-buttons span:hover {
+    transform: scale(1.12);
+    opacity: 0.85;
+}
+
+/* Update input and prompt styles */
+.input-line {
+    background: #ffe5ec;
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-top: auto;
+    box-shadow: 0 1px 8px 0 #ffb3c655;
+    font-family: 'Minecraftia', monospace;
+}
+
+.prompt {
+    /* color: #b04050; */
+    color: #8b2f3f;
+    font-weight: bold;
+    white-space: nowrap;
+    text-shadow: 0 0 8px #ffb3c6, 0 0 16px #ffd6e0;
+    font-family: 'Minecraftia', monospace;
+}
+
+.command-input {
+    background: transparent;
+    border: none;
+    color: #7d3f5c;
+    font-family: 'Minecraftia', monospace;
+    font-size: 18px;
+    outline: none;
+    flex-grow: 1;
+    padding-left: 8px;
+}
+
+.command-input::placeholder {
+    color: #e57373;
+    opacity: 0.5;
+}
+
+/* ASCII Art Styles */
+.ascii-art {
+    font-family: 'Minecraftia', monospace;
+    font-size: 16px;
+    line-height: 1.2;
+    color: #e57373;
+    text-align: left;
+    margin: 20px 0;
+    white-space: pre;
+    text-shadow: 0 0 8px #ffb3c6, 0 0 16px #ffd6e0, 0 1px 8px #ffb3c655;
+    animation: floaty 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes floaty {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-10px);
+    }
+}
+
+.terminal-main-flex {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 30px;
+    gap: 40px;
+}
+
+.ascii-art {
+    flex: 0 0 auto;
+    min-width: 220px;
+    max-width: 320px;
+    text-align: left;
+    margin: 0;
+}
+
+.info-block {
+    background: rgba(255, 179, 198, 0.45);
+    /* soft pastel pink, semi-transparent */
+    border: 2px solid #ffb3c6;
+    border-radius: 8px;
+    box-shadow: 0 2px 16px 0 #ffb3c6, 0 0 12px 2px #ffd6e0;
+    padding: 18px 20px;
+    font-size: 18px;
+    color: #7d3f5c;
+    font-family: 'Minecraftia', monospace;
+    margin-top: 0;
+    margin-bottom: 0;
+    backdrop-filter: blur(6px) saturate(1.1);
+    -webkit-backdrop-filter: blur(6px) saturate(1.1);
+    margin-left: 24px;
+    margin-right: 24px;
+    margin-bottom: 24px;
+}
+
+.info-block>* {
+    align-self: flex-start;
+}
+
+.info-block .info-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e57373;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 8px #ffb3c6, 0 0 16px #ffd6e0;
+    font-family: 'Minecraftia', monospace;
+}
+
+.info-block .info-separator {
+    border-bottom: 2px dashed #ffb3c6;
+    width: 100%;
+    margin: 12px 0 18px 0;
+    opacity: 0.5;
+}
+
+.info-block .info-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #e57373;
+    border-bottom: 1px dashed #ffb3c6;
+    text-decoration: none;
+    margin: 7px 0;
+    font-size: 16px;
+    transition: color 0.2s, border-color 0.2s;
+    text-shadow: 0 1px 8px #ffb3c6;
+    position: relative;
+}
+
+.info-link:hover,
+.link:hover {
+    box-shadow: 0 0 0 3px #ffd6e0, 0 0 8px 2px #ffb3c6;
+    z-index: 2;
+}
+
+.info-block .info-link:hover {
+    color: #ffb3c6;
+    border-bottom: 1px solid #e57373;
+    text-shadow: 0 1px 16px #ffb3c6;
+}
+
+.info-block .info-icon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    filter: brightness(1.5) saturate(2) drop-shadow(0 0 4px #ffb3c6);
+    fill: #e57373 !important;
+    stroke: #e57373 !important;
+}
+
+@media (max-width: 900px) {
+    .terminal {
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        min-width: unset;
+        max-width: unset;
+        border-radius: 0;
+    }
+
+    .terminal-header {
+        border-radius: 0;
+    }
+
+    .terminal-main-flex {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+    }
+
+    .info-block {
+        min-width: unset;
+        max-width: unset;
+        width: 100%;
+        padding: 18px 10px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .ascii-art {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+}
+
+/* Content Sections */
+.content-section {
+    background: rgba(255, 179, 198, 0.65);
+    /* slightly darker pastel pink */
+    border-left: 4px solid #e57373;
+    border-radius: 8px 0 0 8px;
+    margin-left: 24px;
+    margin-right: 24px;
+    margin-bottom: 24px;
+    margin-top: 16px;
+    padding: 18px 24px;
+    box-shadow: none;
+}
+
+.section-title {
+    color: #e57373;
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 8px #ffb3c6, 0 0 16px #ffd6e0;
+}
+
+/* .section-content {
+    font-family: 'Minecraftia', monospace;
+    font-size: 16px;
+    letter-spacing: 1.2px;
+    line-height: 1.7;
+} */
+.section-content {
+    font-family: 'Minecraftia', monospace;
+    font-size: 16px;
+    letter-spacing: 1.2px;
+    line-height: 1.7;
+    color: #7d3f5c;
+    /* matches your prompt and info-block color */
+}
+
+.project-description,
+.experience-description {
+    font-family: 'Minecraftia', monospace;
+    font-size: 13px;
+    letter-spacing: 1.2px;
+    line-height: 1.7;
+}
+
+/* Links */
+.link {
+    color: #e57373;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    text-shadow: 0 0 8px #ffb3c6, 0 0 16px #ffd6e0;
+    position: relative;
+}
+
+.info-link,
+.link {
+    position: relative;
+    transition: color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.info-link:hover,
+.link:hover {
+    box-shadow: 0 0 0 3px #ffd6e0, 0 0 8px 2px #ffb3c6;
+    z-index: 2;
+}
+
+.link:hover {
+    color: #ffb3c6;
+    text-decoration: underline;
+    text-shadow: 0 1px 16px #ffb3c6;
+}
+
+/* Command History */
+.command-history {
+    margin-left: 24px;
+    margin-right: 24px;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 900px) {
+    .command-history {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+.command-history .prompt {
+    /* color: #e57373;
+    font-weight: bold;
+    text-shadow: 0 1px 8px #ffb3c6; */
+    color: #7d3f5c;
+    /* matches terminal text, or choose #b04050 */
+    margin-left: 8px;
+    font-weight: bold;
+}
+
+.command-history .command {
+    color: #ffffff;
+    margin-left: 8px;
+}
+
+/* .command-history .output {
+    color: #ccc;
+    margin-top: 5px;
+    margin-left: 20px;
+} */
+
+/* Help Command Output */
+.help-section {
+    margin: 10px 0;
+    color: #e57373;
+    text-shadow: 0 0 8px #ffb3c6, 0 0 16px #ffd6e0;
+    margin-left: 24px;
+}
+
+@media (max-width: 900px) {
+    .help-section {
+        margin-left: 0;
+    }
+}
+
+.help-command {
+    color: #e57373;
+    font-weight: bold;
+    margin-right: 10px;
+    text-shadow: 0 0 8px #ffb3c6, 0 0 16px #ffd6e0;
+}
+
+.help-description {
+    color: #7d3f5c;
+}
+
+/* Projects Grid */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 15px;
+}
+
+/* .project-card {
+    background: rgba(255, 179, 198, 0.15);
+    border: 1px solid #ffb3c6;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px 0 #ffb3c6;
+} */
+/* .project-card {
+    background-color: rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 16px;
+    border: 1px solid rgba(125, 63, 92, 0.3);
+}
+
+.project-title {
+    color: #e57373;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-shadow: 0 0 8px #ffb3c6, 0 0 16px #ffd6e0;
+}
+
+.project-description {
+    color: #7d3f5c;
+    margin-bottom: 10px;
+}
+
+.project-tech {
+    color: #6c2e40;
+    font-size: 14px;
+}  */
+
+.project-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(125, 63, 92, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 6px rgba(125, 63, 92, 0.2);
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(125, 63, 92, 0.3);
+}
+
+.project-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #d14b64;
+  margin-bottom: 10px;
+}
+
+.project-description {
+  font-size: 14px;
+  color: #542c3e; /* darker and more readable */
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.project-tech {
+  font-size: 13px;
+  color: #6a3c4c;
+  font-style: italic;
+  margin-bottom: 12px;
+}
+
+.project-card .link {
+  font-weight: bold;
+  font-size: 14px;
+  color: #e57373;
+  text-decoration: none;
+}
+
+.project-card .link:hover {
+  text-decoration: underline;
+  color: #f28b8b;
+}
+
+
+/* Skills Section */
+/* .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.skill-category {
+    background: rgba(255, 179, 198, 0.15);
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px 0 #ffb3c6;
+}
+
+.skill-category-title {
+    color: #e57373;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-shadow: 0 0 8px #ffb3c6, 0 0 16px #ffd6e0;
+}
+
+.skill-list {
+    color: #ccc;
+    list-style: none;
+}
+
+.skill-list li {
+    margin: 5px 0;
+    padding-left: 15px;
+    position: relative;
+}
+
+.skill-list li::before {
+    content: ">";
+    color: #e57373;
+    position: absolute;
+    left: 0;
+} */
+ .skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.skill-category {
+  flex: 1 1 200px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(125, 63, 92, 0.2);
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(125, 63, 92, 0.1);
+}
+
+.skill-category-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #d14b64;
+  margin-bottom: 10px;
+}
+
+.skill-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.skill-list li {
+  color: #542c3e;
+  font-size: 14px;
+  margin-bottom: 6px;
+  position: relative;
+  padding-left: 18px;
+}
+
+.skill-list li::before {
+  content: "›";
+  position: absolute;
+  left: 0;
+  color: #e57373;
+  font-weight: bold;
+}
+
+
+/* Experience Timeline */
+/* .experience-item {
+    margin: 20px 0;
+    padding: 15px;
+    border-left: 3px solid #ffb3c6;
+    background: rgba(255, 179, 198, 0.10);
+    box-shadow: 0 2px 8px 0 #ffb3c6;
+}
+
+.experience-title {
+    color: #e57373;
+    font-weight: bold;
+    font-size: 16px;
+    text-shadow: 0 0 8px #ffb3c6, 0 0 16px #ffd6e0;
+}
+
+.experience-company {
+    color: #ffb3c6;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.experience-date {
+    color: #888;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.experience-description {
+    color: #ccc;
+    line-height: 1.6;
+} */
+
+.experience-item {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(125, 63, 92, 0.2);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 18px;
+  box-shadow: 0 2px 6px rgba(125, 63, 92, 0.15);
+}
+
+.experience-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #d14b64;
+  margin-bottom: 4px;
+}
+
+.experience-company {
+  font-size: 13px;
+  color: #a56777;
+  font-style: italic;
+  margin-bottom: 2px;
+}
+
+.experience-date {
+  font-size: 13px;
+  color: #6c2e40;
+  margin-bottom: 10px;
+}
+
+.experience-description {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #542c3e;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .terminal-body {
+        padding: 10px;
+    }
+
+    .ascii-art {
+        font-size: 8px;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #ffe5ec;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ffb3c6;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #e57373;
+}
+
+/* Animation for typing effect */
+.typing {
+    overflow: hidden;
+    border-right: 2px solid #e57373;
+    white-space: nowrap;
+    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blink-caret {
+
+    from,
+    to {
+        border-color: transparent;
+    }
+
+    50% {
+        border-color: #e57373;
+    }
+}
+
+.pdf-viewer-overlay {
+    position: fixed;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70vw;
+    max-width: 900px;
+    height: 80vh;
+    background: rgba(255, 214, 224, 0.85);
+    border-radius: 8px;
+    box-shadow: 0 8px 40px 0 #ffb3c6, 0 0 0 2px #ffb3c6;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1.5px solid #ffb3c6;
+    animation: fadeIn 0.2s;
+}
+
+.pdf-viewer-overlay.hidden {
+    display: none;
+}
+
+.pdf-viewer-header {
+    background: #ffb3c6;
+    color: #e57373;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 18px;
+    border-bottom: 1.5px solid #e57373;
+    font-family: 'Minecraftia', monospace;
+    font-size: 15px;
+    font-weight: 700;
+    position: relative;
+    min-height: 36px;
+}
+
+.pdf-viewer-buttons {
+    display: flex;
+    gap: 8px;
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+.pdf-viewer-buttons span {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    display: inline-block;
+    border: 1px solid #e57373;
+    box-shadow: 0 0 0 1px #ffb3c6;
+    opacity: 1;
+    transition: transform 0.1s;
+    cursor: pointer;
+}
+
+.pdf-close {
+    background: #e57373;
+}
+
+.pdf-minimize {
+    background: #ffb3c6;
+}
+
+.pdf-maximize {
+    background: #ffd6e0;
+}
+
+.pdf-viewer-buttons span:hover {
+    transform: scale(1.12);
+    opacity: 0.85;
+}
+
+.pdf-viewer-title {
+    flex: 1;
+    text-align: center;
+    color: #e57373;
+    font-size: 14px;
+    font-family: 'Minecraftia', monospace;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    pointer-events: none;
+    z-index: 1;
+    text-shadow: 0 0 8px #ffb3c6, 0 0 16px #ffd6e0;
+}
+
+.pdf-viewer-overlay iframe {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #232526;
+}
+
+@media (max-width: 900px) {
+    .pdf-viewer-overlay {
+        width: 98vw;
+        height: 90vh;
+        top: 10px;
+        left: 1vw;
+        transform: none;
+        max-width: unset;
+        border-radius: 6px;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Error page pinkify */
+.error-ascii {
+    color: #e57373 !important;
+    text-shadow: 0 1px 8px #ffb3c6 !important;
+}
+
+.error-message {
+    color: #e57373 !important;
+}
+
+.error-btn {
+    background: #ffd6e0 !important;
+    color: #e57373 !important;
+    border: 1.5px solid #ffb3c6 !important;
+    box-shadow: 0 2px 12px 0 #ffb3c6 !important;
+}
+
+.error-btn:hover {
+    background: #e57373 !important;
+    color: #ffd6e0 !important;
+}
+
+/* html, body, * {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><rect width="32" height="32" fill="none"/><path d="M2 2h28v28H2z" fill="none" stroke="%23e57373" stroke-width="2"/><rect x="6" y="6" width="20" height="20" fill="%23ffd6e0" stroke="%23ffb3c6" stroke-width="2"/></svg>') 16 16, auto;
+}  */
+
+body,
+.terminal,
+.info-block,
+.info-block .info-name,
+.content-section,
+.section-content,
+.project-description,
+.experience-description,
+.terminal-title,
+.section-title,
+.prompt,
+.link,
+.help-section,
+.help-command,
+.project-title,
+.skill-category-title,
+.experience-title,
+.pdf-viewer-title,
+.command-input,
+.ascii-art {
+    font-family: 'Minecraftia', monospace !important;
+}
+
+.terminal {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 40px);
+    max-height: none;
+}
+
+.terminal-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    max-height: 100%;
+    padding: 32px 32px 0 32px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+/* .output {
+    flex: 1 1 auto;
+    overflow: visible;
+} */
+ .output {
+  font-size: 14px;
+  color: #542c3e;
+  font-family: 'JetBrains Mono', monospace;
+  line-height: 1.6;
+  margin-top: 8px;
+}
+
+
+.input-line {
+    position: sticky;
+    bottom: 0;
+    background: rgba(255, 229, 236, 0.95);
+    z-index: 10;
+    margin-bottom: 24px;
+}
+
+@media (max-width: 900px) {
+    .terminal-body {
+        padding: 10px 4px 10px 4px;
+    }
+
+    .info-block,
+    .content-section,
+    .input-line {
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+}
+
+.input-line {
+    margin-left: 24px;
+    margin-right: 24px;
+}
+
+@media (max-width: 900px) {
+    .input-line {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+.terminal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.terminal-body::-webkit-scrollbar-track {
+    background: #ffe5ec;
+    border-radius: 4px;
+}
+
+.terminal-body::-webkit-scrollbar-thumb {
+    background: #ffb3c6;
+    border-radius: 4px;
+}
+
+.terminal-body::-webkit-scrollbar-thumb:hover {
+    background: #e57373;
+}
+
+/* Remove dark scrollbar for global */
+::-webkit-scrollbar-track {
+    background: #ffe5ec;
+}
